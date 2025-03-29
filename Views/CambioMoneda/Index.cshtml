@@ -1,0 +1,67 @@
+@model CasaDeCambio.Models.CambioMonedaModel
+
+
+@{
+    ViewData["Title"] = "Casa de Cambio";
+}
+
+<h2>Conversión de Moneda</h2>
+
+<form asp-action="Convertir" method="post">
+    <div>
+        <label>Moneda que envías:</label>
+        <select asp-for="MonedaOrigen">
+            <option value="BRL">Real Brasileño (BRL)</option>
+            <option value="PEN">Sol Peruano (PEN)</option>
+            <option value="USD">Dólar Americano (USD)</option>
+        </select>
+    </div>
+    <div>
+        <label>Moneda que recibes:</label>
+        <select asp-for="MonedaDestino">
+            <option value="PEN">Sol Peruano (PEN)</option>
+            <option value="BRL">Real Brasileño (BRL)</option>
+            <option value="USD">Dólar Americano (USD)</option>
+        </select>
+    </div>
+    <div>
+        <label>Cantidad:</label>
+        <input type="number" asp-for="Cantidad" required />
+    </div>
+    
+    <!-- Campo oculto para mantener el resultado después del POST -->
+    <input type="hidden" asp-for="Resultado" />
+
+    <button type="submit">Convertir</button>
+</form>
+
+<h3>Resultado: @(Model?.Resultado ?? "0.00")</h3>
+
+<button onclick="location.href='/Compra'" style="background-color: green; color: white; padding: 10px; border: none; cursor: pointer;">
+    Comprar
+</button>
+
+<h2>Formulario de Compra</h2>
+
+<form asp-action="GenerarBoleta" method="post">
+    <div>
+        <label>Nombre:</label>
+        <input type="text" asp-for="Nombre" required />
+    </div>
+    <div>
+        <label>Apellido:</label>
+        <input type="text" asp-for="Apellido" required />
+    </div>
+    <div>
+        <label>Correo Electrónico:</label>
+        <input type="email" asp-for="Correo" required />
+    </div>
+    <div>
+        <label>Monto de Cambio:</label>
+        <input type="text" asp-for="Resultado" readonly />
+    </div>
+
+    <button type="submit" style="background-color: blue; color: white; padding: 10px; border: none; cursor: pointer;">
+        Generar Boleta PDF
+    </button>
+</form>

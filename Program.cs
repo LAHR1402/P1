@@ -13,17 +13,30 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseRouting();
 
+
+
 app.UseAuthorization();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=CambioMoneda}/{action=Index}/{id?}");
+});
 
 app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
-    .WithStaticAssets();
+    pattern: "{controller=CambioMoneda}/{action=Index}/{id?}");
+
 
 
 app.Run();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=CambioMoneda}/{action=Index}/{id?}");
+
